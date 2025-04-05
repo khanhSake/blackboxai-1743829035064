@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - HR Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <div id="nav-placeholder"></div>
+
+    <main class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold text-blue-800 mb-6">HR Dashboard</h1>
+        
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-blue-100 text-blue-600 mr-4">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500">Total Employees</p>
+                        <p class="text-2xl font-bold">142</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
+                        <i class="fas fa-building text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500">Departments</p>
+                        <p class="text-2xl font-bold">8</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-yellow-100 text-yellow-600 mr-4">
+                        <i class="fas fa-calendar-check text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500">On Leave Today</p>
+                        <p class="text-2xl font-bold">5</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-red-100 text-red-600 mr-4">
+                        <i class="fas fa-exclamation-triangle text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500">Pending Alerts</p>
+                        <p class="text-2xl font-bold">3</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">Department Distribution</h2>
+                <canvas id="deptChart" height="250"></canvas>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">Monthly Attendance</h2>
+                <canvas id="attendanceChart" height="250"></canvas>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Load navigation
+        fetch('layout.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('nav-placeholder').innerHTML = html;
+            });
+
+        // Department Chart
+        const deptCtx = document.getElementById('deptChart').getContext('2d');
+        new Chart(deptCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['IT', 'HR', 'Finance', 'Marketing', 'Operations'],
+                datasets: [{
+                    data: [25, 15, 20, 18, 22],
+                    backgroundColor: [
+                        '#3B82F6',
+                        '#10B981',
+                        '#F59E0B',
+                        '#6366F1',
+                        '#EC4899'
+                    ]
+                }]
+            }
+        });
+
+        // Attendance Chart
+        const attCtx = document.getElementById('attendanceChart').getContext('2d');
+        new Chart(attCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                datasets: [{
+                    label: 'Present',
+                    data: [95, 89, 92, 94, 97],
+                    backgroundColor: '#10B981'
+                }, {
+                    label: 'Absent',
+                    data: [5, 11, 8, 6, 3],
+                    backgroundColor: '#F59E0B'
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
