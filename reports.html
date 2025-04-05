@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Analytics - HR System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <div id="nav-placeholder"></div>
+
+    <main class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold text-blue-800 mb-6">Reports & Analytics</h1>
+        
+        <!-- Filter Section -->
+        <div class="bg-white p-4 rounded-lg shadow mb-8">
+            <div class="flex flex-wrap items-center gap-4">
+                <div>
+                    <label class="block text-gray-700 mb-1">Report Type</label>
+                    <select class="border rounded p-2 w-48">
+                        <option>Employee Overview</option>
+                        <option>Salary Analysis</option>
+                        <option>Attendance Trends</option>
+                        <option>Turnover Rate</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-1">Time Period</label>
+                    <select class="border rounded p-2 w-48">
+                        <option>Last 3 Months</option>
+                        <option>Last 6 Months</option>
+                        <option>Last Year</option>
+                        <option selected>Year to Date</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-1">Department</label>
+                    <select class="border rounded p-2 w-48">
+                        <option>All Departments</option>
+                        <option>Information Technology</option>
+                        <option>Human Resources</option>
+                        <option>Finance</option>
+                    </select>
+                </div>
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-1">
+                    <i class="fas fa-filter mr-2"></i>Apply Filters
+                </button>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Employee Distribution -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">Employee Distribution</h2>
+                    <button class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+                <canvas id="employeeChart" height="250"></canvas>
+            </div>
+
+            <!-- Salary Range -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">Salary Range Analysis</h2>
+                    <button class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+                <canvas id="salaryChart" height="250"></canvas>
+            </div>
+        </div>
+
+        <!-- Salary Report Table -->
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <div class="p-4 bg-blue-50 border-b flex justify-between items-center">
+                <h2 class="text-xl font-semibold text-blue-800">Monthly Salary Report</h2>
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    <i class="fas fa-file-export mr-2"></i>Export Report
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="p-3 text-left">Month</th>
+                            <th class="p-3 text-left">Total Salaries</th>
+                            <th class="p-3 text-left">Average Salary</th>
+                            <th class="p-3 text-left">Highest Salary</th>
+                            <th class="p-3 text-left">Lowest Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-3">January 2025</td>
+                            <td class="p-3">$142,500</td>
+                            <td class="p-3">$3,750</td>
+                            <td class="p-3">$5,900 (John Smith)</td>
+                            <td class="p-3">$2,800 (Lisa Wong)</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-3">February 2025</td>
+                            <td class="p-3">$145,200</td>
+                            <td class="p-3">$3,820</td>
+                            <td class="p-3">$5,900 (John Smith)</td>
+                            <td class="p-3">$2,800 (Lisa Wong)</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-3">March 2025</td>
+                            <td class="p-3">$147,800</td>
+                            <td class="p-3">$3,890</td>
+                            <td class="p-3">$6,200 (John Smith)</td>
+                            <td class="p-3">$2,800 (Lisa Wong)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Load navigation
+        fetch('layout.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('nav-placeholder').innerHTML = html;
+            });
+
+        // Employee Distribution Chart
+        const empCtx = document.getElementById('employeeChart').getContext('2d');
+        new Chart(empCtx, {
+            type: 'pie',
+            data: {
+                labels: ['IT', 'HR', 'Finance', 'Marketing', 'Operations'],
+                datasets: [{
+                    data: [25, 15, 12, 8, 20],
+                    backgroundColor: [
+                        '#3B82F6',
+                        '#10B981', 
+                        '#F59E0B',
+                        '#6366F1',
+                        '#EC4899'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+
+        // Salary Range Chart
+        const salaryCtx = document.getElementById('salaryChart').getContext('2d');
+        new Chart(salaryCtx, {
+            type: 'bar',
+            data: {
+                labels: ['$2,000-$3,000', '$3,000-$4,000', '$4,000-$5,000', '$5,000+'],
+                datasets: [{
+                    label: 'Employees',
+                    data: [8, 15, 10, 5],
+                    backgroundColor: '#3B82F6'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
