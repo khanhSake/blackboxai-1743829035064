@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management - HR System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <div id="nav-placeholder"></div>
+
+    <main class="container mx-auto p-4">
+        <!-- Header Section -->
+        <header class="bg-white shadow mb-6 p-4 rounded-lg">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-semibold text-blue-800">Employee Management</h1>
+                <button id="addEmployeeBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                    <i class="fas fa-plus mr-2"></i> Add Employee
+                </button>
+            </div>
+        </header>
+
+        <!-- Search Bar -->
+        <div class="bg-white p-4 rounded-lg shadow mb-6">
+            <div class="flex flex-wrap gap-4">
+                <div class="w-full md:w-1/4">
+                    <input type="text" id="searchID" placeholder="Employee ID" class="w-full border rounded p-2">
+                </div>
+                <div class="w-full md:w-1/4">
+                    <input type="text" id="searchName" placeholder="Name" class="w-full border rounded p-2">
+                </div>
+                <div class="w-full md:w-1/4">
+                    <select id="searchDept" class="w-full border rounded p-2">
+                        <option value="">All Departments</option>
+                        <option>IT</option>
+                        <option>HR</option>
+                        <option>Finance</option>
+                        <option>Marketing</option>
+                    </select>
+                </div>
+                <button id="searchBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full md:w-auto">
+                    <i class="fas fa-search mr-2"></i> Search
+                </button>
+            </div>
+        </div>
+
+        <!-- Employee Table -->
+        <div class="overflow-x-auto bg-white rounded-lg shadow mb-8">
+            <table class="w-full">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="p-3 text-left cursor-pointer">Employee ID</th>
+                        <th class="p-3 text-left cursor-pointer">Name</th>
+                        <th class="p-3 text-left cursor-pointer">Department</th>
+                        <th class="p-3 text-left cursor-pointer">Job Title</th>
+                        <th class="p-3 text-left cursor-pointer">Status</th>
+                        <th class="p-3 text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTableBody">
+                    <!-- Sample data - will be populated dynamically -->
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="p-3">EMP001</td>
+                        <td class="p-3">John Smith</td>
+                        <td class="p-3">IT</td>
+                        <td class="p-3">Software Engineer</td>
+                        <td class="p-3">
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Active</span>
+                        </td>
+                        <td class="p-3 flex space-x-2">
+                            <button class="text-blue-600 hover:text-blue-800">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="text-red-600 hover:text-red-800">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-end">
+            <div class="flex items-center space-x-2">
+                <button class="p-2 rounded hover:bg-gray-200">
+                    <i class="fas fa-angle-left"></i>
+                </button>
+                <span class="px-3 py-1 bg-blue-600 text-white rounded">1</span>
+                <button class="p-2 rounded hover:bg-gray-200">
+                    <i class="fas fa-angle-right"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Load navigation
+        fetch('layout.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('nav-placeholder').innerHTML = html;
+            });
+
+        // TODO: Implement employee management functionality
+        document.getElementById('addEmployeeBtn').addEventListener('click', () => {
+            alert('Add employee functionality will be implemented next');
+        });
+    </script>
+</body>
+</html>
